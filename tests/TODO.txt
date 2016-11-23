@@ -1,0 +1,51 @@
+
+in(path).glob("*.js").but_not(in("node_modules"))
+
+
+in(path).glob("*.js").but_not(in("node_modules"))
+
+in(path).regex(re.compile("(.*)")))
+
+in(path).following_softlinks()
+in(path).only_to_depth(4)
+in(path).no_subdirs()
+
+
+in(path).contents.contain("fdsa")
+in(path).contents.match(regex(r"(.*)"))
+
+in(path).is.changed_since()
+in(path).is.no_older_than()
+in(path).is.executable()
+in(path).is.directory()
+in(path).is.not.directory()
+
+
+in(path).has.gid(101)
+in(path).is.newer_than(datetime)
+in(path).has.perms("u+rx") / 777
+in(path).is_writable()
+in(path).is_dir()
+in(path).is.softlink(pointing_to=in(path)).but.not(named(".gitignore"))
+in(path).is_empty()
+in(path).is_larger_than(
+in(path).is_smaller_than("312M")  # type check
+in(path).is.size.gt("312M")
+
+in(path).not.git_ignored()
+
+in(path).only_files()
+
+in(path).but_not(subdirs_of("
+
+but_not(is(on_other_filesystem()))
+
+return generator
+
+
+
+
+TODO
+
+depth in subdirs
+

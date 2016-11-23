@@ -1,0 +1,8 @@
+build/
+dist/
+.cache
+pathquery.egg-info/
+tests/.hitch
+__pycache__
+*.pyc
+*.kate-swp
