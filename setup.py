@@ -15,7 +15,7 @@ def read(*parts):
 
 
 setup(name="pathquery",
-      version="0.1",
+      version=read('VERSION').replace('\n', ''),
       description="PathQuery is a tool to declaratively define file searches.",
       long_description=read('README.rst'),
       classifiers=[
