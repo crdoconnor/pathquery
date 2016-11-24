@@ -1,6 +1,6 @@
 {% for python_version in python_versions %}
 {% for pathpy_version in pathpy_versions %}
-- name: Not in
+- name: Is directory
   preconditions:
     pathpy_version: {{ pathpy_version }}
     python_version: {{ python_version }}
@@ -18,15 +18,13 @@
     - Run command: |
         from pathquery import pathq
 
-        for path in pathq("yourdir/*.js").but_not(pathq("yourdir/node_modules/*")):
+        for path in pathq("yourdir/*").is_directory().but_not(pathq("yourdir/node_modules")):
              output(path)
     - Output contains:
         expected contents:
-          - yourdir/file1.js
-          - yourdir/file2.js
-          - yourdir/other_folder/file3.js
+          - yourdir
+          - yourdir/other_folder
         but not:
-          - yourdir/node_modules/file4
-          - yourdir/node_modules/file5
+          - yourdir/node_modules
 {% endfor %}
 {% endfor %}

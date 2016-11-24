@@ -125,20 +125,26 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
             ))
         self.path.state.joinpath("output.txt").remove()
 
-    def output_contains(self, expected_contents, but_not):
+    def output_contains(self, expected_contents, but_not=None):
         output_contents = self.path.state.joinpath("output.txt").bytes().decode('utf8').strip()
-        for item in expected_contents:
-            if item not in output_contents:
+        for expected_item in expected_contents:
+            found = False
+            for output_item in output_contents.split('\n'):
+                if output_item.strip() == expected_item.strip():
+                    found = True
+            if not found:
                 raise RuntimeError("Expected:\n{0}\n\nNot found in:\n{1}".format(
-                    "\n".join(expected_contents),
+                    expected_item,
                     output_contents,
                 ))
-        for item in but_not:
-            if item in output_contents:
-                raise RuntimeError("NOT expected:\n{0}\n\nBut found in:\n{1}".format(
-                    "\n".join(but_not),
-                    output_contents,
-                ))
+
+        if but_not is not None:
+            for item in but_not:
+                if item in output_contents:
+                    raise RuntimeError("NOT expected:\n{0}\n\nBut found in:\n{1}".format(
+                        "\n".join(but_not),
+                        output_contents,
+                    ))
 
     def make_directory(self, directory):
         self.path.state.joinpath(directory).mkdir()
