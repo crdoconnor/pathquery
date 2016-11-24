@@ -21,7 +21,7 @@ class pathq(object):
         new_pathq._but_not.append(paths)
         return new_pathq
 
-    def is_directory(self):
+    def is_dir(self):
         new_pathq = copy.copy(self)
         new_pathq._ensure_is_directory = True
         return new_pathq
