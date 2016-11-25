@@ -1,7 +1,7 @@
 import copy
 import fnmatch
 from os import walk
-from os.path import split, join, isdir
+from os.path import split, join, isdir, islink
 from path import Path
 from fnmatch import fnmatch
 
@@ -11,6 +11,7 @@ class pathq(object):
         self._path = path
         self._head, self._tail = split(str(self._path))
         self._ensure_is_directory = False
+        self._ensure_is_not_symlink = False
         if self._head == '':
             self._head = '.'
         self._but_not = []
@@ -26,6 +27,11 @@ class pathq(object):
         new_pathq._ensure_is_directory = True
         return new_pathq
 
+    def is_not_symlink(self):
+        new_pathq = copy.copy(self)
+        new_pathq._ensure_is_not_symlink = True
+        return new_pathq
+
     def _all_files(self):
         return matches
 
@@ -36,6 +42,8 @@ class pathq(object):
                 if fnmatch(full_filename, but_not._path):
                     is_match = False
             if self._ensure_is_directory and not isdir(full_filename):
+                is_match = False
+            if self._ensure_is_not_symlink and islink(full_filename):
                 is_match = False
             if is_match:
                 return True

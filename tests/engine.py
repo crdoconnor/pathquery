@@ -26,6 +26,11 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
                 filepath.dirname().makedirs()
             filepath.write_text(text)
 
+        for filename, linkto in self.preconditions.get("symlinks", {}).items():
+            filepath = self.path.state.joinpath(filename)
+            linktopath = self.path.state.joinpath(linkto)
+            linktopath.symlink(filepath)
+
         self.python_package = hitchpython.PythonPackage(
             self.preconditions.get('python_version', '3.5.0')
         )
