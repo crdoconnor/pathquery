@@ -37,9 +37,6 @@ class pathq(object):
         new_pathq._ensure_is_not_symlink = True
         return new_pathq
 
-    def _all_files(self):
-        return matches
-
     def _is_match(self, full_filename):
         if fnmatch(full_filename, self._tail):
             is_match = True
