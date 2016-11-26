@@ -56,16 +56,14 @@ class pathq(object):
             return is_match
 
     def __iter__(self):
-        matches = []
         for root, dirnames, filenames_in_dir in walk(self._head):
             if self._is_match(root):
                 if root.startswith("./"):
                     root = root[2:]
-                matches.append(Path(root))
+                yield Path(root)
             for filename_in_dir in filenames_in_dir:
                 full_filename = join(root, filename_in_dir)
                 if self._is_match(full_filename):
                     if full_filename.startswith("./"):
                         full_filename = full_filename[2:]
-                    matches.append(Path(full_filename))
-        return iter(matches)
+                    yield Path(full_filename)
