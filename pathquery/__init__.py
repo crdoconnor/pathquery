@@ -11,7 +11,7 @@ class pathq(object):
         self._path = path
         self._head, self._tail = split(str(self._path))
         self._is_directory = None
-        self._ensure_is_not_symlink = False
+        self._is_symlink = None
         if self._head == '':
             self._head = '.'
         self._but_not = []
@@ -32,9 +32,14 @@ class pathq(object):
         new_pathq._is_directory = False
         return new_pathq
 
+    def is_symlink(self):
+        new_pathq = copy.copy(self)
+        new_pathq._is_symlink = True
+        return new_pathq
+
     def is_not_symlink(self):
         new_pathq = copy.copy(self)
-        new_pathq._ensure_is_not_symlink = True
+        new_pathq._is_symlink = False
         return new_pathq
 
     def _is_match(self, full_filename):
@@ -46,8 +51,9 @@ class pathq(object):
             if self._is_directory is not None:
                 if self._is_directory != isdir(full_filename):
                     is_match = False
-            if self._ensure_is_not_symlink and islink(full_filename):
-                is_match = False
+            if self._is_symlink is not None:
+                if self._is_symlink != islink(full_filename):
+                    is_match = False
             return is_match
 
     def __iter__(self):
