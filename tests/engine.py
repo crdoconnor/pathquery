@@ -144,10 +144,14 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
                 ))
 
         if but_not is not None:
-            for item in but_not:
-                if item in output_contents:
-                    raise RuntimeError("NOT expected:\n{0}\n\nBut found in:\n{1}".format(
-                        "\n".join(but_not),
+            for unexpected_item in but_not:
+                found = False
+                for output_item in output_contents.split('\n'):
+                    if output_item.strip() == unexpected_item.strip():
+                        found = True
+                if found:
+                    raise RuntimeError("Expected NOT to find:\n{0}\n\nBut found in:\n{1}".format(
+                        unexpected_item,
                         output_contents,
                     ))
 
