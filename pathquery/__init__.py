@@ -1,9 +1,8 @@
-import copy
-import fnmatch
-from os import walk
 from os.path import split, join, isdir, islink
-from path import Path
 from fnmatch import fnmatch
+from path import Path
+from os import walk
+import copy
 
 
 class pathq(object):
