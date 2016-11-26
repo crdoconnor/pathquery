@@ -1,6 +1,9 @@
 Tests
 =====
 
+If you want to hack on this project, you can run these tests. Set up instructions are as follows:
+
+
 Running on Mac
 --------------
 
