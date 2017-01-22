@@ -1,51 +1,36 @@
 
-in(path).glob("*.js").but_not(in("node_modules"))
+PathQ(re.compile("(.*)")))
+
+PathQ(path).following_softlinks()
+PathQ(path).only_to_depth(4)
+PathQ(path).no_subdirs()
 
 
-in(path).glob("*.js").but_not(in("node_modules"))
+PathQ(path).contents_contain("fdsa") / string or regex
+PathQ(path).contents_are(re.compile(r"(.*)")) / string or regex
 
-in(path).regex(re.compile("(.*)")))
-
-in(path).following_softlinks()
-in(path).only_to_depth(4)
-in(path).no_subdirs()
-
-
-in(path).contents.contain("fdsa")
-in(path).contents.match(regex(r"(.*)"))
-
-in(path).is.changed_since()
-in(path).is.no_older_than()
-in(path).is.executable()
-in(path).is.directory()
-in(path).is.not.directory()
+PathQ(path).is_changed_since(datetime)
+PathQ(path).is_no_older_than(days=2)
+PathQ(path).is_executable()
+PathQ(path).is_directory()
+PathQ(path).is_not.directory()
 
 
-in(path).has.gid(101)
-in(path).is.newer_than(datetime)
-in(path).has.perms("u+rx") / 777
-in(path).is_writable()
-in(path).is_dir()
-in(path).is.softlink(pointing_to=in(path)).but.not(named(".gitignore"))
-in(path).is_empty()
-in(path).is_larger_than(
-in(path).is_smaller_than("312M")  # type check
-in(path).is.size.gt("312M")
+PathQ(path).has_gid(101)
+PathQ(path).is_newer_than(datetime)
+PathQ(path).has_perms("u+rx") / 777
+PathQ(path).is_writable()
+PathQ(path).is_dir()
+PathQ(path).is_softlink(pointing_to=path / PathQ)
+PathQ(path).is_empty_file()
+PathQ(path).is_larger_than()
+PathQ(path).is_smaller_than("312M")  # type check
+PathQ(path).is_size_gt("312M")
+PathQ(path).is_size_roughly("300M") / +/- 10%
 
-in(path).not.git_ignored()
+PathQ(path).is_not_git_ignored()
+PathQ(path).is_git_ignored()
 
-in(path).only_files()
+PathQ(path).only_files()
 
-in(path).but_not(subdirs_of("
-
-but_not(is(on_other_filesystem()))
-
-return generator
-
-
-
-
-TODO
-
-depth in subdirs
-
+PathQ(path).ignore_unreadable()
