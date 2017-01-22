@@ -1,4 +1,4 @@
-from os.path import split, join, isdir, islink
+from os.path import join, isdir, islink, splitext, abspath
 from fnmatch import fnmatch
 from path import Path
 from os import walk
@@ -7,13 +7,12 @@ import copy
 
 class pathq(object):
     def __init__(self, path):
-        self._path = path
-        self._head, self._tail = split(str(self._path))
+        self._path = abspath(path)
         self._is_directory = None
         self._is_symlink = None
-        if self._head == '':
-            self._head = '.'
         self._but_not = []
+        self._glob = None
+        self._ext = None
 
     def but_not(self, paths):
         assert type(paths) is pathq
@@ -41,29 +40,43 @@ class pathq(object):
         new_pathq._is_symlink = False
         return new_pathq
 
+    def glob(self, text):
+        new_pathq = copy.copy(self)
+        new_pathq._glob = text
+        return new_pathq
+
+    def ext(self, extension):
+        """
+        Match files with an extension - e.g. 'js', 'txt'
+        """
+        new_pathq = copy.copy(self)
+        new_pathq._ext = extension
+        return new_pathq
+
     def _is_match(self, full_filename):
-        if fnmatch(full_filename, self._tail):
-            is_match = True
-            for but_not in self._but_not:
-                if fnmatch(full_filename, but_not._path):
-                    is_match = False
-            if self._is_directory is not None:
-                if self._is_directory != isdir(full_filename):
-                    is_match = False
-            if self._is_symlink is not None:
-                if self._is_symlink != islink(full_filename):
-                    is_match = False
-            return is_match
+        is_match = True
+        for but_not in self._but_not:
+            if but_not._path in full_filename:
+                is_match = False
+        if self._is_directory is not None:
+            if self._is_directory != isdir(full_filename):
+                is_match = False
+        if self._is_symlink is not None:
+            if self._is_symlink != islink(full_filename):
+                is_match = False
+        if self._glob is not None:
+            if not fnmatch(full_filename, self._glob):
+                is_match = False
+        if self._ext is not None:
+            if splitext(full_filename)[1] != ".{0}".format(self._ext):
+                is_match = False
+        return is_match
 
     def __iter__(self):
-        for root, dirnames, filenames_in_dir in walk(self._head):
+        for root, dirnames, filenames_in_dir in walk(self._path):
             if self._is_match(root):
-                if root.startswith("./"):
-                    root = root[2:]
                 yield Path(root)
             for filename_in_dir in filenames_in_dir:
                 full_filename = join(root, filename_in_dir)
                 if self._is_match(full_filename):
-                    if full_filename.startswith("./"):
-                        full_filename = full_filename[2:]
                     yield Path(full_filename)

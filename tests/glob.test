@@ -18,7 +18,7 @@
     - Run command: |
         from pathquery import pathq
 
-        for path in pathq("*.js"):
+        for path in pathq(".").glob("*.js"):
              output(path)
     - Output contains:
         expected contents:

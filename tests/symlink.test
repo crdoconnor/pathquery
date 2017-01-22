@@ -18,7 +18,7 @@
     - Run command: |
         from pathquery import pathq
 
-        for path in pathq("yourdir/*.js").is_symlink():
+        for path in pathq("yourdir").ext("js").is_symlink():
              output(path)
     - Output contains:
         expected contents:
@@ -47,7 +47,7 @@
     - Run command: |
         from pathquery import pathq
 
-        for path in pathq("yourdir/*.js").is_not_symlink():
+        for path in pathq("yourdir/").ext("js").is_not_symlink():
              output(path)
     - Output contains:
         expected contents:

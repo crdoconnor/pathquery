@@ -19,7 +19,7 @@
     - Run command: |
         from pathquery import pathq
 
-        for path in pathq("yourdir/*").is_dir().but_not(pathq("yourdir/node_modules")):
+        for path in pathq("yourdir").is_dir().but_not(pathq("yourdir/node_modules")):
              output(path)
     - Output contains:
         expected contents:
@@ -46,7 +46,7 @@
     - Run command: |
         from pathquery import pathq
 
-        for path in pathq("yourdir/*").is_not_dir():
+        for path in pathq("yourdir").is_not_dir():
              output(path)
     - Output contains:
         expected contents:

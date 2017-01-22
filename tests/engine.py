@@ -123,7 +123,7 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
             open_delimeter="(((",
             close_delimeter=")))"
         ).compile(expected_contents.strip())
-        if regex.match(output_contents) is   None:
+        if regex.match(output_contents) is None:
             raise RuntimeError("Expected output:\n{0}\n\nActual output:\n{1}".format(
                 expected_contents,
                 output_contents,
@@ -135,11 +135,11 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
         for expected_item in expected_contents:
             found = False
             for output_item in output_contents.split('\n'):
-                if output_item.strip() == expected_item.strip():
+                if output_item.strip() == str(self.path.state.joinpath(expected_item).abspath()).strip():
                     found = True
             if not found:
                 raise RuntimeError("Expected:\n{0}\n\nNot found in:\n{1}".format(
-                    expected_item,
+                    str(self.path.state.join(expected_item)).strip(),
                     output_contents,
                 ))
 
@@ -147,11 +147,11 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
             for unexpected_item in but_not:
                 found = False
                 for output_item in output_contents.split('\n'):
-                    if output_item.strip() == unexpected_item.strip():
+                    if output_item.strip() == str(self.path.state.joinpath(unexpected_item).abspath()).strip():
                         found = True
                 if found:
                     raise RuntimeError("Expected NOT to find:\n{0}\n\nBut found in:\n{1}".format(
-                        unexpected_item,
+                        str(self.path.state.joinpath(unexpected_item).strip()),
                         output_contents,
                     ))
 
