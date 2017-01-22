@@ -39,5 +39,5 @@ Queries are also chainable:
 
 .. code-block:: python
 
-    pathq("yourdir").ext("js").is_symlink().but_not(pathq("yourdir/node_modules")):
+    for p in pathq("yourdir").ext("pyc").is_symlink().but_not(pathq("yourdir/node_modules")):
         p.remove()
