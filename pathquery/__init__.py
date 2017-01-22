@@ -7,6 +7,13 @@ import copy
 
 
 class pathq(object):
+    """
+    PathQuery represents a lazily executed search for files.
+
+    Usage::
+      for filepath in pathq('yourpath/'):
+        filepath.chmod("777")
+    """
     def __init__(self, path):
         self._path = abspath(path)
         if not exists(self._path):
