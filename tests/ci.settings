@@ -5,8 +5,3 @@ pause_on_failure: false
 python_versions:
   - 2.7.10
   - 3.5.0
-peewee_versions:
-  - 2.1.0
-  - 2.8.5
-humanize_versions:
-  - 0.5.1
