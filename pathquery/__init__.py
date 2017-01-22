@@ -1,4 +1,5 @@
-from os.path import join, isdir, islink, splitext, abspath
+from os.path import join, isdir, islink, splitext, abspath, exists
+from pathquery import exceptions
 from fnmatch import fnmatch
 from path import Path
 from os import walk
@@ -8,6 +9,10 @@ import copy
 class pathq(object):
     def __init__(self, path):
         self._path = abspath(path)
+        if not exists(self._path):
+            raise exceptions.PathDoesNotExist(self._path)
+        if not isdir(self._path):
+            raise exceptions.PathIsNotDirectory(self._path)
         self._is_directory = None
         self._is_symlink = None
         self._but_not = []
