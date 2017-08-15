@@ -1,9 +1,6 @@
-from subprocess import call
-from os import path
 from commandlib import run
 import hitchpython
-import hitchserve
-from hitchstory import StoryCollection, StorySchema, BaseEngine, exceptions, validate
+from hitchstory import StoryCollection, StorySchema, BaseEngine, exceptions
 from hitchrun import expected
 from commandlib import Command
 import strictyaml
@@ -63,12 +60,11 @@ class Engine(BaseEngine):
             if not filepath.dirname().exists():
                 filepath.dirname().makedirs()
             filepath.write_text(text)
-        
+
         for filename, linkto in self.preconditions.get("symlinks", {}).items():
             filepath = self.path.state.joinpath(filename)
             linktopath = self.path.state.joinpath(linkto)
             linktopath.symlink(filepath)
-
 
         self.python_package = hitchpython.PythonPackage(
             self.preconditions.get('python_version', '3.5.0')
@@ -91,8 +87,6 @@ class Engine(BaseEngine):
                 run(self.pip("install", "path.py=={0}".format(
                     self.preconditions["pathpy version"]
                 )))
-
-            #)
 
     def run_command(self, command):
         self.ipython_step_library.run(command)
@@ -124,7 +118,9 @@ class Engine(BaseEngine):
         if error_path.exists():
             error_path.remove()
         env = Environment()
-        env.loader = DictLoader(load(self.path.key.joinpath("codetemplates.yml").bytes().decode('utf8')).data)
+        env.loader = DictLoader(
+            load(self.path.key.joinpath("codetemplates.yml").bytes().decode('utf8')).data
+        )
         runpy.write_text(env.get_template("raises_exception").render(
             setup=self.preconditions['setup'],
             code=self.preconditions['code'],
@@ -141,12 +137,13 @@ class Engine(BaseEngine):
             output_contents = self.path.state.joinpath("output.txt").bytes().decode('utf8').strip()
         except FileNotFoundError:
             raise Exception("Output not found")
-        
-        
+
         for expected_item in expected_contents:
             found = False
             for output_item in output_contents.split('\n'):
-                if output_item.strip() == str(self.path.state.joinpath(expected_item).abspath()).strip():
+                if output_item.strip() == str(
+                    self.path.state.joinpath(expected_item).abspath()
+                ).strip():
                     found = True
             if not found:
                 raise RuntimeError("Expected:\n{0}\n\nNot found in:\n{1}".format(
@@ -158,7 +155,9 @@ class Engine(BaseEngine):
             for unexpected_item in but_not:
                 found = False
                 for output_item in output_contents.split('\n'):
-                    if output_item.strip() == str(self.path.state.joinpath(unexpected_item).abspath()).strip():
+                    if output_item.strip() == str(
+                        self.path.state.joinpath(unexpected_item).abspath()
+                    ).strip():
                         found = True
                 if found:
                     raise RuntimeError("Expected NOT to find:\n{0}\n\nBut found in:\n{1}".format(
@@ -221,11 +220,11 @@ def lint():
         "--max-line-length=100",
         "--exclude=__init__.py",
     ).run()
-    #python("-m", "flake8")(
-        #DIR.key.joinpath("key.py"),
-        #"--max-line-length=100",
-        #"--exclude=__init__.py",
-    #).run()
+    python("-m", "flake8")(
+        DIR.key.joinpath("key.py"),
+        "--max-line-length=100",
+        "--exclude=__init__.py",
+    ).run()
     print("Lint success!")
 
 
@@ -291,6 +290,7 @@ def docgen():
             "rst",
             docpath.joinpath("{0}.rst".format(story.slug))
         )
+
 
 @ignore_ctrlc
 def ipy():
