@@ -1,0 +1,38 @@
+POTENTIAL IMPROVEMENTS
+
+pathq(path).named(x)
+pathq(path).regex(re.compile("(.*)"))
+
+pathq(path).following_softlinks()
+pathq(path).only_to_depth(4)
+pathq(path).no_subdirs()
+
+
+pathq(path).contains("fdsa")
+pathq(path).contents_are(re.compile(r"(.*)"))
+
+pathq(path).is_changed_since(datetime)
+pathq(path).is_no_older_than(days=2)
+pathq(path).is_executable()
+pathq(path).is_directory()
+pathq(path).is_not.directory()
+
+
+pathq(path).has_gid(101)
+pathq(path).is_newer_than(datetime)
+pathq(path).has_perms("u+rx") / 777
+pathq(path).is_writable()
+pathq(path).is_dir()
+pathq(path).is_softlink(pointing_to=path / pathq)
+pathq(path).is_empty_file()
+pathq(path).is_larger_than()
+pathq(path).is_smaller_than("312M")  # remember to type check and refuse invalid file sizes
+pathq(path).is_size_gt("312M")
+pathq(path).is_size_roughly("300M", 10) / +/- 10%
+
+pathq(path).is_not_git_ignored()
+pathq(path).is_git_ignored()
+
+pathq(path).only_files()
+
+pathq(path).ignore_unreadable()
