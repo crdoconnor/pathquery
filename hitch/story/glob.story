@@ -41,3 +41,18 @@ Glob all:
           - yourdir
           - yourdir/other_folder
           - yourdir/other_folder/jsfile3.js
+
+Glob one:
+  based on: Pathquery
+  preconditions:
+    files:
+      jsfile1.js: contents
+      jsfile2.js: contents
+      yourdir/other_folder/jsfile3.js: notjs
+    code: |
+      for path in pathq(".").glob("jsfile1.js"):
+            output(path)
+  scenario:
+    - Output contains:
+        expected contents:
+          - jsfile1.js

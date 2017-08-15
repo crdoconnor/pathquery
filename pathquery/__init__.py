@@ -12,7 +12,7 @@ class pathq(object):
 
     Usage::
       for filepath in pathq('yourpath/'):
-        filepath.chmod("777")
+          filepath.chmod("777")
     """
     def __init__(self, path):
         self._path = abspath(path)
@@ -65,7 +65,8 @@ class pathq(object):
         new_pathq._ext = extension
         return new_pathq
 
-    def _is_match(self, full_filename):
+    def _is_match(self, root, filename_in_dir):
+        full_filename = join(root, filename_in_dir)
         is_match = True
         for but_not in self._but_not:
             if but_not._path in full_filename:
@@ -77,7 +78,7 @@ class pathq(object):
             if self._is_symlink != islink(full_filename):
                 is_match = False
         if self._glob is not None:
-            if not fnmatch(full_filename, self._glob):
+            if not fnmatch(filename_in_dir, self._glob):
                 is_match = False
         if self._ext is not None:
             if splitext(full_filename)[1] != ".{0}".format(self._ext):
@@ -86,9 +87,8 @@ class pathq(object):
 
     def __iter__(self):
         for root, dirnames, filenames_in_dir in walk(self._path):
-            if self._is_match(root):
+            if self._is_match(root, ""):
                 yield Path(root)
             for filename_in_dir in filenames_in_dir:
-                full_filename = join(root, filename_in_dir)
-                if self._is_match(full_filename):
-                    yield Path(full_filename)
+                if self._is_match(root, filename_in_dir):
+                    yield Path(join(root, filename_in_dir))
