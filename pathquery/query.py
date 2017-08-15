@@ -1,4 +1,4 @@
-from os.path import join, isdir, islink, splitext, abspath, exists
+from os.path import join, isdir, islink, splitext, abspath, exists, basename
 from pathquery import exceptions
 from fnmatch import fnmatch
 from path import Path
@@ -25,6 +25,7 @@ class pathq(object):
         self._but_not = []
         self._glob = None
         self._ext = None
+        self._named = None
 
     def but_not(self, paths):
         assert type(paths) is pathq
@@ -57,6 +58,11 @@ class pathq(object):
         new_pathq._glob = text
         return new_pathq
 
+    def named(self, text):
+        new_pathq = copy.copy(self)
+        new_pathq._named = text
+        return new_pathq
+
     def ext(self, extension):
         """
         Match files with an extension - e.g. 'js', 'txt'
@@ -79,6 +85,9 @@ class pathq(object):
                 is_match = False
         if self._glob is not None:
             if not fnmatch(filename_in_dir, self._glob):
+                is_match = False
+        if self._named is not None:
+            if basename(filename_in_dir) != self._named:
                 is_match = False
         if self._ext is not None:
             if splitext(full_filename)[1] != ".{0}".format(self._ext):
