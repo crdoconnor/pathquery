@@ -1,4 +1,3 @@
-hitchpython
 hitchstory>=0.8.0 
 strictyaml>=0.11.0
 hitchrunpy>=0.5.0

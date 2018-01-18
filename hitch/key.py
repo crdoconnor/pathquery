@@ -1,12 +1,10 @@
 from commandlib import run, CommandError
-import hitchpython
 from hitchstory import StoryCollection, StorySchema, BaseEngine, HitchStoryException
 from hitchstory import validate, expected_exception
 from hitchrun import expected
 from commandlib import Command
 from strictyaml import Str, Map, MapPattern, Bool, Optional, load
 from pathquery import pathq
-import hitchtest
 from hitchrun import hitch_maintenance
 from commandlib import python
 from hitchrun import DIR
