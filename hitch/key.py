@@ -15,6 +15,7 @@ from hitchrunpy import ExamplePythonCode, HitchRunPyException, ExpectedException
 import requests
 from templex import Templex, NonMatching
 from path import Path
+import hitchbuildpy
 
 
 class Engine(BaseEngine):
@@ -54,26 +55,37 @@ class Engine(BaseEngine):
             linktopath.symlink(filepath)
 
 
-        self.python_package = hitchpython.PythonPackage(
-            self.given['python version']
-        )
-        self.python_package.build()
+        #self.python_package = hitchpython.PythonPackage(
+            #self.given['python version']
+        #)
+        #self.python_package.build()
 
-        self.pip = self.python_package.cmd.pip
-        self.python = self.python_package.cmd.python
+        #self.pip = self.python_package.cmd.pip
+        #self.python = self.python_package.cmd.python
 
-        # Install debugging packages
-        with hitchtest.monitor([self.path.key.joinpath("debugrequirements.txt")]) as changed:
-            if changed:
-                run(self.pip("install", "-r", "debugrequirements.txt").in_dir(self.path.key))
+        ## Install debugging packages
+        #with hitchtest.monitor([self.path.key.joinpath("debugrequirements.txt")]) as changed:
+            #if changed:
+                #run(self.pip("install", "-r", "debugrequirements.txt").in_dir(self.path.key))
 
-        # Uninstall and reinstall
-        with hitchtest.monitor(
-            pathq(self.path.project.joinpath("pathquery")).ext("py")
-        ) as changed:
-            if changed:
-                run(self.pip("uninstall", "pathquery", "-y").ignore_errors())
-                run(self.pip("install", ".").in_dir(self.path.project))
+        ## Uninstall and reinstall
+        #with hitchtest.monitor(
+            #pathq(self.path.project.joinpath("pathquery")).ext("py")
+        #) as changed:
+            #if changed:
+                #run(self.pip("uninstall", "pathquery", "-y").ignore_errors())
+                #run(self.pip("install", ".").in_dir(self.path.project))
+        
+        pylibrary = hitchbuildpy.PyLibrary(
+            base_python=hitchbuildpy.PyenvBuild("3.5.0").with_build_path(self.path.share),
+            module_name="pathquery",
+            library_src=self.path.project,
+        ).with_build_path(self.path.gen)
+        
+        pylibrary.ensure_built()
+        
+        self.python = pylibrary.bin.python
+
 
         self.example_py_code = ExamplePythonCode(self.python, self.path.state)\
             .with_code(self.given.get('code', ''))\

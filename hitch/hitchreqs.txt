@@ -11,7 +11,7 @@ first==2.0.1              # via hitch-pip-tools
 flake8==3.3.0
 hitch-pip-tools==1.8.3    # via hitchrun
 hitchbuild==0.2.1         # via hitchbuildpy
-hitchbuildpy==0.1.5
+hitchbuildpy==0.1.6
 hitchdoc==0.1.1
 hitchpython==0.5.3
 hitchrun==0.2.7
