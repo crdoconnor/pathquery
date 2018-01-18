@@ -11,7 +11,7 @@ To run integration tests / environment on a Mac::
 3) Install brew if not already installed -- instructions here : http://brew.sh/
 4) Run::
 
-    $ brew install python python3 libtool
+    $ brew install python python3 libtool automake
 
     $ pip install --upgrade hitch virtualenv
 
