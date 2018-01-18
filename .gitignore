@@ -4,6 +4,7 @@ dist/
 pathquery.egg-info/
 tests/.hitch
 hitch/gen
+hitch/personalsettings.yml
 __pycache__
 *.pyc
 *.kate-swp
