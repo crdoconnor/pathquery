@@ -13,17 +13,13 @@ To run integration tests / environment on a Mac::
 
     $ brew install python python3 libtool automake
 
-    $ pip install --upgrade hitch virtualenv
+    $ pip install --upgrade hitchkey virtualenv
 
 Git clone the repository somewhere new (e.g. a temporary directory) and switch to the branch you want.
 
 Then::
 
-    $ cd tests/
-
-    $ hitch init
-
-    $ hitch test map.test --settings tdd.settings
+    $ hk regression
 
 
 Running on Linux
