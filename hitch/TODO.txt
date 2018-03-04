@@ -1,38 +1,30 @@
-POTENTIAL IMPROVEMENTS
-
-pathq(path).named(x)
-pathq(path).regex(re.compile("(.*)"))
-
-pathq(path).following_softlinks()
-pathq(path).only_to_depth(4)
-pathq(path).no_subdirs()
-
-
-pathq(path).contains("fdsa")
-pathq(path).contents_are(re.compile(r"(.*)"))
-
-pathq(path).is_changed_since(datetime)
-pathq(path).is_no_older_than(days=2)
-pathq(path).is_executable()
-pathq(path).is_directory()
-pathq(path).is_not.directory()
-
-
-pathq(path).has_gid(101)
-pathq(path).is_newer_than(datetime)
-pathq(path).has_perms("u+rx") / 777
-pathq(path).is_writable()
-pathq(path).is_dir()
-pathq(path).is_softlink(pointing_to=path / pathq)
-pathq(path).is_empty_file()
-pathq(path).is_larger_than()
-pathq(path).is_smaller_than("312M")  # remember to type check and refuse invalid file sizes
-pathq(path).is_size_gt("312M")
-pathq(path).is_size_roughly("300M", 10) / +/- 10%
-
-pathq(path).is_not_git_ignored()
-pathq(path).is_git_ignored()
-
-pathq(path).only_files()
-
-pathq(path).ignore_unreadable()
+- Overload __add__ operator so can combine queries
+- Overload __minus__ operator so can combine queries
+- pq(path).named(x)
+- pq(path).filename_matching(re.compile("(.*)"))
+- pq(path).following_softlinks()
+- pq(path).only_to_depth(dirs=4)
+- pq(path).no_subdirs()
+- pq(path).contains("fdsa")
+- pq(path).contents_matches(re.compile(r"(.*)"))
+- pq(path).contents_is("blah")
+- pq(path).is_changed_since(datetime)
+- pq(path).is_no_older_than(days=2)
+- pq(path).is_executable()
+- pq(path).is_directory()
+- pq(path).is_not_directory()
+- pq(path).has_gid(101)
+- pq(path).is_newer_than(datetime)
+- pq(path).has_perms("u+rx") / 777
+- pq(path).is_writable()
+- pq(path).is_dir()
+- pq(path).is_softlink(pointing_to=path / pathq)
+- pq(path).is_empty_file()
+- pq(path).is_larger_than()
+- pq(path).is_smaller_than("312M")  # remember to type check and refuse invalid file sizes
+- pq(path).is_size_gt("312M")
+- pq(path).is_size_roughly("300M", 10) / +/- 10%
+- pq(path).is_not_git_ignored()
+- pq(path).is_git_ignored()
+- pq(path).only_files()
+- pq(path).ignore_unreadable()
