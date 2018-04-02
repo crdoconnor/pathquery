@@ -10,7 +10,7 @@ Simple globbing:
       yourdir/other_folder/file6: contents
   steps:
   - Run: |
-      for path in pathq(".").glob("*.js"):
+      for path in pathquery(".").glob("*.js"):
           output(path)
   - Output contains:
       expected contents:
@@ -31,7 +31,7 @@ Glob all:
       yourdir/other_folder/jsfile3.js: notjs
   steps:
   - Run: |
-      for path in pathq(".").glob("*"):
+      for path in pathquery(".").glob("*"):
           output(path)
   - Output contains:
       expected contents:
@@ -51,7 +51,7 @@ Glob one:
       yourdir/other_folder/jsfile3.js: notjs
   steps:
   - Run: |
-      for path in pathq(".").glob("jsfile1.js"):
+      for path in pathquery(".").glob("jsfile1.js"):
           output(path)
   - Output contains:
       expected contents:

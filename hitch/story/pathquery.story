@@ -3,7 +3,7 @@ Pathquery:
     python version: (( python version ))
     pathpy version: (( pathpy version ))
     setup: |
-      from pathquery import pathquery as pathq
+      from pathquery import pathquery
       
       def output(text):
           with open("output.txt", "a") as handle:

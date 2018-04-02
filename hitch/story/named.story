@@ -8,7 +8,7 @@ File named:
       yourdir/other_folder/file1.js: notjs
   steps:
   - Run: |
-      for path in pathq("yourdir").named("file1.js"):
+      for path in pathquery("yourdir").named("file1.js"):
           output(path)
   - Output contains:
       expected contents:

@@ -10,7 +10,7 @@ Is a symlink:
       yourdir/other_folder/file5.js: yourdir/other_folder/file4
   steps:
     - Run: |
-        for path in pathq("yourdir").ext("js").is_symlink():
+        for path in pathquery("yourdir").ext("js").is_symlink():
             output(path)
     - Output contains:
         expected contents:
@@ -33,7 +33,7 @@ Is not Symlink:
       yourdir/other_folder/file5.js: yourdir/other_folder/file4
   steps:
   - Run: |
-      for path in pathq("yourdir/").ext("js").is_not_symlink():
+      for path in pathquery("yourdir/").ext("js").is_not_symlink():
           output(path)
   - Output contains:
       expected contents:

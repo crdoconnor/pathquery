@@ -10,7 +10,7 @@ Has extension:
       yourdir/other_folder/file5.js: yourdir/other_folder/file4
   steps:
   - Run: |
-      for path in pathq("yourdir").ext("js").is_symlink():
+      for path in pathquery("yourdir").ext("js").is_symlink():
           output(path)
   - Output contains:
       expected contents:
