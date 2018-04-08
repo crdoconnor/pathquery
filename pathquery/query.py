@@ -71,6 +71,12 @@ class pathq(object):
         new_pathq._ext = extension
         return new_pathq
 
+    def __sub__(self, paths):
+        assert isinstance(paths, pathq), "{0} must be pathquery object.".format(pathq)
+        new_pathq = copy.copy(self)
+        new_pathq._but_not.append(paths)
+        return new_pathq
+
     def _is_match(self, root, filename_in_dir):
         full_filename = join(root, filename_in_dir)
         is_match = True
