@@ -53,6 +53,7 @@ class Engine(BaseEngine):
             linktopath.symlink(filepath)
 
         pylibrary = hitchbuildpy.PyLibrary(
+            name="py3.5.0",
             base_python=hitchbuildpy.PyenvBuild("3.5.0").with_build_path(self.path.share),
             module_name="pathquery",
             library_src=self.path.project,

@@ -8,8 +8,8 @@ decorator==4.0.11         # via ipython, traitlets
 first==2.0.1              # via hitch-pip-tools
 flake8==3.3.0
 hitch-pip-tools==1.8.3    # via hitchrun
-hitchbuild==0.3.1         # via hitchbuildpy
-hitchbuildpy==0.3.0
+hitchbuild==0.3.3
+hitchbuildpy==0.3.4
 hitchdoc==0.1.1
 hitchrun==0.2.7
 hitchrunpy==0.5.0
@@ -26,7 +26,7 @@ jupyter-core==4.3.0       # via jupyter-client
 markupsafe==1.0           # via jinja2
 mccabe==0.6.1             # via flake8
 path.py==10.3.1           # via hitchbuild, hitchdoc, hitchrun, hitchrunpy, hitchstory, pathquery, prettystack
-pathquery==0.2.3          # via hitchstory
+pathquery==0.2.3          # via hitchbuild, hitchbuildpy, hitchstory
 peewee==2.9.2             # via hitchbuild, hitchdoc
 pexpect==4.2.1            # via ipython
 pickleshare==0.7.4        # via ipython
