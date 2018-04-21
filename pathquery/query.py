@@ -6,7 +6,7 @@ from os import walk
 import copy
 
 
-class pathq(object):
+class pathquery(object):
     """
     PathQuery represents a lazily executed search for files.
 
@@ -28,7 +28,7 @@ class pathq(object):
         self._named = None
 
     def but_not(self, paths):
-        assert type(paths) is pathq
+        assert type(paths) is pathquery
         new_pathq = copy.copy(self)
         new_pathq._but_not.append(paths)
         return new_pathq
@@ -72,7 +72,7 @@ class pathq(object):
         return new_pathq
 
     def __sub__(self, paths):
-        assert isinstance(paths, pathq), "{0} must be pathquery object.".format(pathq)
+        assert isinstance(paths, pathquery), "{0} must be pathquery object.".format(paths)
         new_pathq = copy.copy(self)
         new_pathq._but_not.append(paths)
         return new_pathq

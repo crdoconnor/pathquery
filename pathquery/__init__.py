@@ -1,4 +1,3 @@
-from pathquery.query import pathq as pathquery
-from pathquery.query import pathq as pathq
+from pathquery.query import pathquery
 from pathquery.exceptions import PathDoesNotExist
 from pathquery.exceptions import PathIsNotDirectory
