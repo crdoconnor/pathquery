@@ -143,9 +143,9 @@ class Engine(BaseEngine):
 
     def output_contains(self, expected_contents, but_not=None):
         try:
-            output_contents = self.path.state.joinpath("output.txt").bytes().decode('utf8').strip()
+            output_contents = self.path.state.joinpath("output.txt").text().strip()
         except FileNotFoundError:
-            raise Exception("Output not found")
+            raise AssertionError("Output not found")
 
         for expected_item in expected_contents:
             found = False
@@ -155,8 +155,8 @@ class Engine(BaseEngine):
                 ).strip():
                     found = True
             if not found:
-                raise RuntimeError("Expected:\n{0}\n\nNot found in:\n{1}".format(
-                    str(self.path.state.join(expected_item)).strip(),
+                raise AssertionError("Expected:\n{0}\n\nNot found in output:\n{1}".format(
+                    expected_item,
                     output_contents,
                 ))
 
@@ -170,7 +170,7 @@ class Engine(BaseEngine):
                         found = True
                 if found:
                     raise RuntimeError("Expected NOT to find:\n{0}\n\nBut found in:\n{1}".format(
-                        str(self.path.state.joinpath(unexpected_item).strip()),
+                        unexpected_item,
                         output_contents,
                     ))
 
