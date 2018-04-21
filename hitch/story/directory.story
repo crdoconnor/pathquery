@@ -10,7 +10,7 @@ Is a directory:
       yourdir/node_modules/file6.js: contents
   steps:
   - Run: |
-      for path in pathquery("yourdir").is_dir().but_not(pathquery("yourdir/node_modules")):
+      for path in pathquery("yourdir").is_dir() - pathquery("yourdir/node_modules"):
           output(path)
   - Output contains:
       expected contents:

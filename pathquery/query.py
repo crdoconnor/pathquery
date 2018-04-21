@@ -27,12 +27,6 @@ class pathquery(object):
         self._ext = None
         self._named = None
 
-    def but_not(self, paths):
-        assert type(paths) is pathquery
-        new_pathq = copy.copy(self)
-        new_pathq._but_not.append(paths)
-        return new_pathq
-
     def is_dir(self):
         new_pathq = copy.copy(self)
         new_pathq._is_directory = True
