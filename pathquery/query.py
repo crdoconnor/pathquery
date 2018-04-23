@@ -108,7 +108,8 @@ class pathquery(object):
         full_filename = join(root, filename_in_dir)
         is_match = True
         for but_not in self._but_not:
-            if but_not._path in full_filename:
+            if but_not._is_match(filename_in_dir, full_filename)\
+              and full_filename.startswith(but_not._path):
                 is_match = False
         if not self._pattern.match(filename_in_dir, full_filename):
             is_match = False
