@@ -12,7 +12,7 @@ hitchbuild==0.3.3
 hitchbuildpy==0.3.4
 hitchdoc==0.1.1
 hitchrun==0.2.7
-hitchrunpy==0.5.0
+hitchrunpy==0.6.1
 hitchstory==0.8.0
 icommandlib==0.1.1
 idna==2.5                 # via requests

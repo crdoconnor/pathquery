@@ -41,6 +41,9 @@ class Engine(BaseEngine):
             self.path.state.rmtree(ignore_errors=True)
         self.path.state.mkdir()
 
+        if self.path.gen.joinpath("q").exists():
+            self.path.gen.joinpath("q").remove()
+
         for filename, text in self.given.get("files", {}).items():
             filepath = self.path.state.joinpath(filename)
             if not filepath.dirname().exists():
@@ -68,6 +71,7 @@ class Engine(BaseEngine):
             .with_code(self.given.get('code', ''))\
             .with_setup_code(self.given.get('setup', ''))\
             .with_terminal_size(160, 100)\
+            .with_env(TMPDIR=self.path.gen)\
             .with_long_strings(
                 yaml_snippet_1=self.given.get('yaml_snippet_1'),
                 yaml_snippet=self.given.get('yaml_snippet'),
@@ -186,6 +190,10 @@ class Engine(BaseEngine):
                 self.path.key.joinpath("printstats.py"),
                 self.path.profile.joinpath("{0}.dat".format(self.story.slug))
             ).run()
+
+    def tear_down(self):
+        if self.path.gen.joinpath("q").exists():
+            print(self.path.gen.joinpath("q").text())
 
 
 def _storybook(settings):
