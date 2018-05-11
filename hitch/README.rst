@@ -1,10 +1,10 @@
-Tests
-=====
+Hacking
+=======
 
 Running on Mac
 --------------
 
-To run integration tests / environment on a Mac::
+To set up a dev environment:
 
 1) Install XCode from the Mac App store, if not already installed.
 2) Run "xcode-select --install"
@@ -13,38 +13,40 @@ To run integration tests / environment on a Mac::
 
     $ brew install python python3 libtool automake
 
-    $ pip install --upgrade hitchkey virtualenv
+    $ pip install --upgrade hitchkey virtualenv     # ideally outside virtualenv, n.b. hitchkey has no dependencies
+
+If it fails with a "permission denied", try sudo pip install.    
 
 Git clone the repository somewhere new (e.g. a temporary directory) and switch to the branch you want.
 
-Then::
+Then (in any directory inside the project)::
 
-    $ hk regression
+    $ hk help
+
+If this fails to run on your mac for any reason, please raise a ticket.
 
 
 Running on Linux
 ================
 
-To set up::
+To set up a dev environment::
 
-    $ sudo apt-get install python3 python-pip python-virtualenv
+    $ sudo apt-get install python3 python-pip python-virtualenv libreadline-dev
 
-    $ sudo pip install --upgrade hitch
+    $ sudo pip install --upgrade hitchkey         # ideally outside of a virtualenv, hitchkey has no dependencies
 
-Then::
+Then (in any directory inside the project)::
 
-    $ cd tests
+    $ hk help
 
-    $ hitch init
+If this fails to run on your linux box for any reason, please raise a ticket.
 
-    $ hitch test map.test --settings tdd.settings
+Important commands::
 
-Troubleshooting
-===============
+    $ hk bdd not sym    # run individual "is not symlink" story
+    
+    $ hk lint           # lint using project specific rules
+    
+    $ hk regression     # lint and run all tests
 
-If something goes wrong during set up you can do the following:
-
-* Note that if you see some assertion errors during hitch init they can *safely be ignored*.
-* Try running the test again if it fails a first time.
-* Try running hitch clean and hitch cleanpkg and then running hitch init / hitch test again.
-* Email me with the stacktrace (crdoconnor@gmail.com) if you can't figure out why it's failing.
+    $ hk rerun          # rerun the last test but don't capture stdout (useful if you want to embed and use ipython)
