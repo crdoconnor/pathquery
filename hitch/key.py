@@ -23,6 +23,7 @@ class Engine(BaseEngine):
         given={
             Optional("files"): MapPattern(Str(), Str()),
             Optional("symlinks"): MapPattern(Str(), Str()),
+            Optional("permissions"): MapPattern(Str(), Str()),
             Optional("setup"): Str(),
             Optional("python version"): Str(),
             Optional("pathpy version"): Str()
@@ -54,6 +55,11 @@ class Engine(BaseEngine):
             filepath = self.path.state.joinpath(filename)
             linktopath = self.path.state.joinpath(linkto)
             linktopath.symlink(filepath)
+
+        for filename, permission in self.given.get("permissions", {}).items():
+            filepath = self.path.state.joinpath(filename)
+            filepath.chmod(int(permission, 8))
+
 
         pylibrary = hitchbuildpy.PyLibrary(
             name="py3.5.0",
