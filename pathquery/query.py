@@ -2,7 +2,7 @@ from os.path import join, isdir, islink, splitext, abspath, exists, basename
 from pathquery import exceptions
 from fnmatch import fnmatch
 from path import Path
-from os import walk
+from os import walk, access, W_OK
 from copy import copy
 
 
@@ -14,6 +14,7 @@ class Pattern(object):
         self.glob = None
         self.ext = None
         self.named = None
+        self.is_writable = None
 
     def match(self, filename_in_dir, full_filename):
         is_match = True
@@ -33,6 +34,12 @@ class Pattern(object):
         if self.ext is not None:
             if splitext(full_filename)[1] != ".{0}".format(self.ext):
                 is_match = False
+        if self.is_writable is not None:
+            writable = access(full_filename, W_OK)
+            if self.is_writable:
+                is_match = writable
+            else:
+                is_match = not writable
 
         return is_match
 
@@ -82,6 +89,16 @@ class pathquery(object):
     def named(self, text):
         new_pathq = copy(self)
         new_pathq._pattern.named = text
+        return new_pathq
+
+    def is_writable(self):
+        new_pathq = copy(self)
+        new_pathq._pattern.is_writable = True
+        return new_pathq
+
+    def is_not_writable(self):
+        new_pathq = copy(self)
+        new_pathq._pattern.is_writable = False
         return new_pathq
 
     def ext(self, extension):

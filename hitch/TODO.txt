@@ -3,7 +3,6 @@
 - pq(path).filename_matching(re.compile("(.*)"))  // not sure about this
 - pq(path).is_changed_since(datetime)
 - pq(path).is_newer_than(datetime)
-- pq(path).is_writable()
 - pq(path).is_executable()
 - pq(path).following_softlinks()
 - pq(path).only_to_depth(dirs=4)
