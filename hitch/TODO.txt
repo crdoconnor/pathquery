@@ -1,3 +1,4 @@
+- pathquery("x") - pathquery("x").named("__pycache__") -- fails because __pycache__ is a directory.
 - Overload __add__ operator so can combine queries
 - pq(path).is_not_git_ignored()
 - pq(path).filename_matching(re.compile("(.*)"))  // not sure about this
